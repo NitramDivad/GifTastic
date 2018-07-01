@@ -1,0 +1,51 @@
+body {
+    background-image: url(../images/startrek.jpg);
+    background-size: cover;
+
+}
+
+#main-title {
+    background: rgba(255, 255, 255, 0.15);
+    color: yellow;
+    margin-bottom: 20px;
+}
+
+#input_StarTrek {
+    margin-right: 10px;
+}
+
+#trekSearch {
+    margin-bottom: 20px;
+}
+
+.gifButtons {
+    margin-bottom: 25px;
+}
+
+button {
+    font-size: 16px;
+    margin: 10px 10px 0 0;
+    padding: 5px;
+}
+
+h2 {
+    color: blue;
+}
+
+.gifsGrouping {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.st_gifDiv {
+    margin-right: 5px;
+    text-align: center;
+}
+
+.gifRating {
+    display: inline-block;
+    background-color: gray;
+    color: black;
+    padding: 5px;
+    text-align: center;
+}
