@@ -146,9 +146,8 @@ $("#add-topic").bind("click", function(event) {
 $('#input_StarTrek').keypress(function(event) {
 //***************************************************************/   
 
-    if (event.keyCode == '13') {    //ensures ENTER does not refresh
+    if (event.keyCode == '13')      //ensures ENTER does not refresh
         event.preventDefault();
-    }
  });
 
 
