@@ -1,5 +1,7 @@
 var StarTrek = {
     arrGifTopics: [],
+    currentTopic: "",
+    offSet: 0,
 
     BuildTheButtons: function() {
 
@@ -24,8 +26,28 @@ var StarTrek = {
 
     CallAJAX: function(topic) {
         var apiURL = "https://api.giphy.com/v1/gifs/search?q=",
-            apiKey = "&api_key=d03x0UXViZqHxHo74p52vH3b2iTSF52G&limit=10",
-            queryURL = apiURL + topic + apiKey
+            apiKey = "&api_key=d03x0UXViZqHxHo74p52vH3b2iTSF52G",
+            apiLimit = "&limit=10",
+            apiOffset = "&offset=" + (this.offSet).toString(),
+            queryURL,
+            multiTopic;
+            
+            
+        if (topic.length === 1)
+            queryURL = apiURL + topic + apiKey + apiLimit;
+        else {
+            for (i=0; i < topic.length; i++) {
+                if (i > 0)
+                    multiTopic += "+" + topic[i];
+                else
+                    multiTopic = topic[i];
+            }
+
+            queryURL = apiURL + multiTopic + apiKey + apiLimit;
+        }
+
+        if (this.offSet > 0)
+            queryURL += apiOffset;
 
         $.ajax({
             url: queryURL,
@@ -42,6 +64,8 @@ var StarTrek = {
             gifImage,
             gifRating,
             rating;
+
+        $("#add-ten").removeClass("invisible");
 
         topicGifs.forEach(function(item) {
 
@@ -62,7 +86,10 @@ var StarTrek = {
 
             gifDiv.prepend(gifImage);
             gifDiv.append(rating);
-            $(".gifsGrouping").append(gifDiv);
+            if (this.offSet === 0)
+                $(".gifsGrouping").append(gifDiv);
+            else
+                $(".gifsGrouping").prepend(gifDiv);
         });
     },
 
@@ -90,7 +117,7 @@ $(document).ready(function() {
                              "Tribbles","Sulu",
                              "Spock","Uhura"
                             ];
-    
+
     StarTrek.BuildTheButtons();
 });
 
@@ -110,22 +137,23 @@ $("#add-topic").bind("click", function(event) {
 $('#input_StarTrek').keypress(function(event) {
 //***************************************************************/   
 
-    if (event.keyCode == '13') {
+    if (event.keyCode == '13') {    //ensures ENTER does not refresh
         event.preventDefault();
     }
  });
 
 
-// main function for ajax gif grabbing and html placement
 //***************************************************************/
 $(document).on("click", ".btn-topic", function() {
 //***************************************************************/
 
-    console.log("clicked")
-    var whichTopic= $(this).attr("data-name");
+    var whichTopic = $(this).attr("data-name"),
+        arrWhichTopic = whichTopic.match(/\b(\w+)\b/g)  //splits out to array separate words
 
     $(".gifsGrouping").empty();
-    StarTrek.CallAJAX(whichTopic);
+
+    StarTrek.currentTopic = arrWhichTopic;
+    StarTrek.CallAJAX(arrWhichTopic);
 });
 
 
@@ -139,4 +167,13 @@ $(document).on("click" , ".gifImage" , function() {
         StarTrek.PauseGif(this);
     else
         StarTrek.PlayGif(this);
+});
+
+
+//***************************************************************/
+$(document).on("click" , "#add-ten" , function() {
+    //***************************************************************/
+    
+    StarTrek.offSet += 10;
+    StarTrek.CallAJAX(StarTrek.currentTopic);
 });

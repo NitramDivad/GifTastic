@@ -1,13 +1,13 @@
 body {
     background-image: url(../images/startrek.jpg);
-    background-size: cover;
-
+    background-repeat: repeat;
 }
 
 #main-title {
     background: rgba(255, 255, 255, 0.15);
     color: yellow;
     margin-bottom: 30px;
+    padding: 20px;
 }
 
 #input_StarTrek {
@@ -23,12 +23,16 @@ body {
 }
 
 button {
-    font-size: 16px;
-    margin: 10px 10px 0 0;
-    padding: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
-h2 {
+#add-ten {
+    margin-bottom: 25px;
+    padding: 10px;
+}
+
+h3 {
     color: yellow;
 }
 
@@ -47,5 +51,4 @@ h2 {
     background-color: gray;
     color: black;
     padding: 5px;
-    text-align: center;
 }
