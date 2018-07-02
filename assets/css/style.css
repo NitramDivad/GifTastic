@@ -7,7 +7,7 @@ body {
 #main-title {
     background: rgba(255, 255, 255, 0.15);
     color: yellow;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 #input_StarTrek {
@@ -29,7 +29,7 @@ button {
 }
 
 h2 {
-    color: blue;
+    color: yellow;
 }
 
 .gifsGrouping {
