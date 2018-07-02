@@ -32,6 +32,10 @@ button {
     padding: 10px;
 }
 
+#no-records {
+    color: yellow;
+}
+
 h3 {
     color: yellow;
 }

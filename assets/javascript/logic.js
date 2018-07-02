@@ -1,7 +1,7 @@
 var StarTrek = {
     arrGifTopics: [],
-    currentTopic: "",
     offSet: 0,
+    currentTopic: "",
 
     BuildTheButtons: function() {
 
@@ -53,7 +53,13 @@ var StarTrek = {
             url: queryURL,
             method: "GET"
             }).then(function(response) {
-                StarTrek.ProcessAJAX(response.data)
+                console.log((response.data).length)
+                if ((response.data).length > 0)
+                    StarTrek.ProcessAJAX(response.data)
+                else {
+                    $("#add-ten").addClass("d-none");
+                    $("#no-records").removeClass("d-none");
+                }
             });
     },
 
@@ -65,7 +71,8 @@ var StarTrek = {
             gifRating,
             rating;
 
-        $("#add-ten").removeClass("invisible");
+        $("#no-records").addClass("d-none");
+        $("#add-ten").removeClass("d-none");
 
         topicGifs.forEach(function(item) {
 
@@ -86,11 +93,12 @@ var StarTrek = {
 
             gifDiv.prepend(gifImage);
             gifDiv.append(rating);
+                
             if (this.offSet === 0)
                 $(".gifsGrouping").append(gifDiv);
             else
                 $(".gifsGrouping").prepend(gifDiv);
-        });
+        })
     },
 
     PlayGif: function(whichOne) {
@@ -133,6 +141,7 @@ $("#add-topic").bind("click", function(event) {
         StarTrek.AddAButton(strInput);
 });
 
+
 //***************************************************************/
 $('#input_StarTrek').keypress(function(event) {
 //***************************************************************/   
@@ -151,6 +160,8 @@ $(document).on("click", ".btn-topic", function() {
         arrWhichTopic = whichTopic.match(/\b(\w+)\b/g)  //splits out to array separate words
 
     $(".gifsGrouping").empty();
+    StarTrek.numRequests = 0;
+    $("#add-ten").addClass("d-none");
 
     StarTrek.currentTopic = arrWhichTopic;
     StarTrek.CallAJAX(arrWhichTopic);
@@ -172,7 +183,7 @@ $(document).on("click" , ".gifImage" , function() {
 
 //***************************************************************/
 $(document).on("click" , "#add-ten" , function() {
-    //***************************************************************/
+//***************************************************************/
     
     StarTrek.offSet += 10;
     StarTrek.CallAJAX(StarTrek.currentTopic);
